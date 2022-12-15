@@ -1,7 +1,7 @@
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 
-export default function({ columnId, handleAddition }:
+export default function CardAddition({ columnId, handleAddition }:
   { columnId: number, handleAddition: (columnId: number, content: string) => void }) {
 
   const [addingBoolean, setAddingBoolean] = useState(false);
@@ -32,7 +32,9 @@ export default function({ columnId, handleAddition }:
           </Box>
         </Box> :
         <Box>
-          <Button onClick={() => { setAddingBoolean(true) }}>Add Card</Button>
+          <Button onClick={() => { setAddingBoolean(true) }}>
+            <Typography variant="h6">Add Task</Typography>
+          </Button>
         </Box>
       }
     </Box>

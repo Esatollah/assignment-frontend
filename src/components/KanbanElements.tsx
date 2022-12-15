@@ -39,7 +39,7 @@ export function KanbanList({ tasks, column, index, handleAddition }: KanbanListP
             {(provided) => (
               <CardContent {...provided.droppableProps}
               >
-                <Stack spacing={2} ref={provided.innerRef} >
+                <Stack spacing={2} ref={provided.innerRef}>
                   {tasks.map((task, idx) => (
                     <KanbanItem key={task.id} task={task} index={idx} />
                   ))}

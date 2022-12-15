@@ -8,7 +8,7 @@ import ColumnAddition from "./components/ColumnAddition";
 
 
 const initialData = INITIAL_MOCK_DATA;
-const COLUMN_TYPE: TypeId = "column";
+const COLUMN_DROPPABLE_TYPE: TypeId = "column";
     
 
 export function Kanban() {
@@ -22,7 +22,7 @@ export function Kanban() {
       return;
     }
      
-    if (type === COLUMN_TYPE) {
+    if (type === COLUMN_DROPPABLE_TYPE) {
       const newColumnOrder = Array.from(data.columnOrder);
       newColumnOrder.splice(source.index, 1);
       newColumnOrder.splice(destination.index, 0, `${draggableId}`);
@@ -118,7 +118,6 @@ export function Kanban() {
         [`column-${newColumn.id}`]: newColumn,
       },
     }
-    console.log(newData);
     return newData;
     })
   }
@@ -130,7 +129,6 @@ export function Kanban() {
       currentIds.push(currentColumns[key].id);
     };
     const newMaxId = currentIds.length === 0 ? 1 : Math.max(...currentIds) + 1;
-    console.log(newMaxId, "new id for new column");
 
     const newColumn = {
       id: newMaxId,
@@ -147,7 +145,6 @@ export function Kanban() {
       columns: {...previousData.columns, [`column-${newMaxId}`]: newColumn},
       columnOrder: newColumnOrder,
     }
-    console.log(newData);
     return newData;
     })
   }
@@ -167,17 +164,17 @@ export function Kanban() {
   return (
       <Box sx={{paddingBottom: 4}}>
         <DragDropContext onDragEnd={onDragEnd}>
-         <Droppable droppableId="KanbanLists" direction="horizontal" type={COLUMN_TYPE}>
+         <Droppable droppableId="KanbanLists" direction="horizontal" type={COLUMN_DROPPABLE_TYPE}>
             {(provided) => (
               <Stack spacing={2} margin={5} direction="row" 
               ref={provided.innerRef}
-              {...provided.droppableProps}
-              >
+                {...provided.droppableProps}
+                >
                 {
                   orderedKanbanLists
                 }
                 {provided.placeholder}
-              <ColumnAddition handleAddition={handleColumnAddition} />
+                <ColumnAddition handleAddition={handleColumnAddition} />
               </Stack>
             )}
           </Droppable>
