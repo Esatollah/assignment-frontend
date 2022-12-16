@@ -5,9 +5,9 @@ import CardAddition from "./CardAddition";
 
 const ITEM_DROPPABLE_TYPE: TypeId = "item";
 
-export function KanbanItem({ task, index }: KanbanItemProps) {
+export function KanbanItem({ card, index }: KanbanItemProps) {
   return (
-    <Draggable draggableId={String(task.id)} index={index}>
+    <Draggable draggableId={String(card.id)} index={index}>
       {(provided) => (
         <Card ref={provided.innerRef}
           {...provided.draggableProps}
@@ -18,7 +18,7 @@ export function KanbanItem({ task, index }: KanbanItemProps) {
               {...provided.dragHandleProps}
             >
               <Checkbox />
-              <Typography variant="h6">{task.content}</Typography>
+              <Typography variant="h6">{card.content}</Typography>
             </Stack>
           </CardContent>
         </Card >)}
@@ -26,7 +26,7 @@ export function KanbanItem({ task, index }: KanbanItemProps) {
   );
 }
 
-export function KanbanList({ tasks, column, index, handleAddition }: KanbanListProps) {
+export function KanbanList({ cards, column, index, handleAddition }: KanbanListProps) {
   return (
     <Draggable draggableId={`column-${column.id}`} index={index}>
       {(provided) => (
@@ -40,8 +40,8 @@ export function KanbanList({ tasks, column, index, handleAddition }: KanbanListP
               <CardContent {...provided.droppableProps}
               >
                 <Stack spacing={2} ref={provided.innerRef}>
-                  {tasks.map((task, idx) => (
-                    <KanbanItem key={task.id} task={task} index={idx} />
+                  {cards.map((card, idx) => (
+                    <KanbanItem key={card.id} card={card} index={idx} />
                   ))}
                   {provided.placeholder}
                 </Stack>

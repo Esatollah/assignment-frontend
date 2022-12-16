@@ -1,14 +1,23 @@
 import { Box, Stack, Button } from "@mui/material";
 import { useState } from "react";
-import INITIAL_STATE, {INITIAL_MOCK_DATA} from "./db/mockData";
+import INITIAL_MOCK_DATA from "./db/mockData";
 import { KanbanData } from "../types/Kanban.interface";
 import { KanbanList } from "./components/KanbanElements";
 import { DragDropContext, DropResult, Droppable, TypeId } from "react-beautiful-dnd";
 import ColumnAddition from "./components/ColumnAddition";
 
+const INITIAL_STATE: KanbanData = {
+  "cards": {
+  },
+  "columns": {
+  },
 
-const initialData = INITIAL_MOCK_DATA;
+  "columnOrder": []
+}
 const COLUMN_DROPPABLE_TYPE: TypeId = "column";
+
+//use INITIAL_MOCK_DATA for testing
+const initialData = INITIAL_STATE;
     
 
 export function Kanban() {
@@ -47,13 +56,13 @@ export function Kanban() {
 
     //reorder tasks/cards within the same column
     if (startingColumns === finishingColumns) {
-      const newTaskIds = Array.from(startingColumns.taskIds);
-      newTaskIds.splice(source.index, 1);
-      newTaskIds.splice(destination.index, 0, Number(draggableId));
+      const newCardIds = Array.from(startingColumns.cardIds);
+      newCardIds.splice(source.index, 1);
+      newCardIds.splice(destination.index, 0, Number(draggableId));
 
       const newColumn = {
         ...startingColumns,
-        taskIds: newTaskIds,
+        cardIds: newCardIds,
       };
 
       setData(previousData => ({
@@ -67,18 +76,18 @@ export function Kanban() {
     }
 
     //move tasks/cards to another column
-    const startTaskIds = Array.from(startingColumns.taskIds);
-    startTaskIds.splice(source.index, 1);
+    const startCardIds = Array.from(startingColumns.cardIds);
+    startCardIds.splice(source.index, 1);
     const newStartColumn = {
       ...startingColumns,
-      taskIds: startTaskIds,
+      cardIds: startCardIds,
     };
 
-    const finishTaskIds = Array.from(finishingColumns.taskIds);
-    finishTaskIds.splice(destination.index, 0, Number(draggableId));
+    const finishCardIds = Array.from(finishingColumns.cardIds);
+    finishCardIds.splice(destination.index, 0, Number(draggableId));
     const newFinishColumn = {
       ...finishingColumns,
-      taskIds: finishTaskIds,
+      cardIds: finishCardIds,
     };
 
     setData(previousData => ({
@@ -94,28 +103,28 @@ export function Kanban() {
   const handleCardAddition = (columnId: number, content: string) => {
 
     const currentIds: number[] = [];
-    const currentTasks = data.tasks;
-    for (var key in currentTasks) {
-      currentIds.push(currentTasks[key].id);
+    const currentCards = data.cards;
+    for (var key in currentCards) {
+      currentIds.push(currentCards[key].id);
     };
     const newMaxId = currentIds.length === 0 ? 1 : Math.max(...currentIds) + 1;
 
-    const newTask = {
+    const newCard = {
       id: newMaxId,
       content: content,
     };
 
-    const newTaskIds = data.columns[`column-${columnId}`].taskIds;
+    const newTaskIds = data.columns[`column-${columnId}`].cardIds;
     newTaskIds.push(newMaxId);
     const newColumn = {
       ...data.columns[`column-${columnId}`],
-      taskIds: newTaskIds,
+      cardIds: newTaskIds,
     };
 
     setData(previousData => {
       const newData = {
       ...previousData,
-      tasks: {...previousData.tasks, [`task-${newMaxId}`]: newTask},
+      cards: {...previousData.cards, [`card-${newMaxId}`]: newCard},
       columns: {
         ...previousData.columns,
         [`column-${newColumn.id}`]: newColumn,
@@ -136,7 +145,7 @@ export function Kanban() {
     const newColumn = {
       id: newMaxId,
       title: content,
-      taskIds: [],
+      cardIds: [],
     };
 
     const newColumnOrder = data.columnOrder;
@@ -156,10 +165,10 @@ export function Kanban() {
   const orderedKanbanLists = 
     data.columnOrder.map((columnId, idx) => {
       const column = data.columns[columnId];
-      const tasks = column?.taskIds.map((taskId) => data.tasks[`task-${taskId}`]);
+      const cards = column?.cardIds.map((cardId) => data.cards[`card-${cardId}`]);
       return (
         <KanbanList key={column?.id} 
-        column={column} tasks={tasks} index={idx} handleAddition={handleCardAddition} />
+        column={column} cards={cards} index={idx} handleAddition={handleCardAddition} />
       );
     }) 
 

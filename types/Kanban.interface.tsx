@@ -1,4 +1,4 @@
-export interface KanbanTask {
+export interface KanbanCard {
   id: number;
   content: string;
 }
@@ -6,12 +6,12 @@ export interface KanbanTask {
 export interface KanbanColumn {
   id: number;
   title: string;
-  taskIds: number[];
+  cardIds: number[];
 }
 
 export interface KanbanData {
-  tasks: {
-    [key: string]: KanbanTask;
+  cards: {
+    [key: string]: KanbanCard;
   };
   columns: {
     [key: string]: KanbanColumn;
@@ -20,14 +20,14 @@ export interface KanbanData {
 }
 
 export interface KanbanListProps {
-  tasks: KanbanTask[];
+  cards: KanbanCard[];
   column: KanbanColumn;
   index: number;
   handleAddition: (columnId: number, content: string) => void;
 }
 
 export interface KanbanItemProps {
-  task: KanbanTask;
+  card: KanbanCard;
   index: number;
 }
 
