@@ -27,6 +27,7 @@ export default function ColumnAddition({ handleAddition }: { handleAddition: (co
         <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
           <TextField id="filled-basic" label="Title"
             value={inputValue} variant="filled" sx={{ bgcolor: '#e0e0e0', borderRadius: '1rem', marginTop: '1rem' }}
+            onKeyDown={e => { if (e.key === 'Enter') handleAddClick() }}
             onChange={e => setInputValue(e.target.value)} />
           <Box display='flex' justifyContent='space-between' sx={{ marginTop: '4px' }}>
             <Button variant='contained' sx={{ margin: "4px" }} onClick={handleClose}>X</Button>

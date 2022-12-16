@@ -25,7 +25,9 @@ export default function CardAddition({ columnId, handleAddition }:
     <Box width={'100%'} display='flex' justifyContent='center' sx={{ marginTop: '.75rem' }}>
       {addingBoolean ?
         <Box display='' flex=''>
-          <TextField id="filled-basic" label="Task" value={inputValue} variant="filled" onChange={e => setInputValue(e.target.value)} />
+          <TextField id="filled-basic" label="Task" value={inputValue} variant="filled" onChange={e => setInputValue(e.target.value)} 
+          onKeyDown={e => { if (e.key === 'Enter') handleAddClick() }} 
+          />
           <Box display='flex' justifyContent='center' sx={{ marginTop: '4px' }}>
             <Button onClick={handleClose}>X</Button>
             <Button onClick={handleAddClick}>Add</Button>
