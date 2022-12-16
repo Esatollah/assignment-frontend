@@ -30,7 +30,7 @@ export function KanbanList({ tasks, column, index, handleAddition }: KanbanListP
   return (
     <Draggable draggableId={`column-${column.id}`} index={index}>
       {(provided) => (
-        <Card variant="outlined" sx={{ bgcolor: 'grey.200', width: 400, height: 'fit-content' }}
+        <Card variant="outlined" sx={{ bgcolor: 'grey.200', width: 300, height: 'fit-content' }}
           ref={provided.innerRef}
           {...provided.draggableProps} {...provided.dragHandleProps}
         >

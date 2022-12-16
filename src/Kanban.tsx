@@ -1,6 +1,6 @@
 import { Box, Stack, Button } from "@mui/material";
 import { useState } from "react";
-import INITIAL_DATA, {INITIAL_MOCK_DATA} from "./db/mockData";
+import INITIAL_STATE, {INITIAL_MOCK_DATA} from "./db/mockData";
 import { KanbanData } from "../types/Kanban.interface";
 import { KanbanList } from "./components/KanbanElements";
 import { DragDropContext, DropResult, Droppable, TypeId } from "react-beautiful-dnd";
@@ -22,6 +22,7 @@ export function Kanban() {
       return;
     }
      
+     // reorder columns
     if (type === COLUMN_DROPPABLE_TYPE) {
       const newColumnOrder = Array.from(data.columnOrder);
       newColumnOrder.splice(source.index, 1);
@@ -44,6 +45,7 @@ export function Kanban() {
     const startingColumns = data.columns[`column-${source.droppableId}`];
     const finishingColumns = data.columns[`column-${destination.droppableId}`];
 
+    //reorder tasks/cards within the same column
     if (startingColumns === finishingColumns) {
       const newTaskIds = Array.from(startingColumns.taskIds);
       newTaskIds.splice(source.index, 1);
@@ -64,6 +66,7 @@ export function Kanban() {
       return;
     }
 
+    //move tasks/cards to another column
     const startTaskIds = Array.from(startingColumns.taskIds);
     startTaskIds.splice(source.index, 1);
     const newStartColumn = {
@@ -166,7 +169,7 @@ export function Kanban() {
         <DragDropContext onDragEnd={onDragEnd}>
          <Droppable droppableId="KanbanLists" direction="horizontal" type={COLUMN_DROPPABLE_TYPE}>
             {(provided) => (
-              <Stack spacing={2} margin={5} direction="row" 
+              <Stack spacing={2} margin={5} direction="row"
               ref={provided.innerRef}
                 {...provided.droppableProps}
                 >

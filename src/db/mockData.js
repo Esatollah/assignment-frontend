@@ -1,4 +1,4 @@
-export const INITIAL_DATA = {
+export const INITIAL_STATE = {
   "tasks": {
   },
   "columns": {
@@ -43,4 +43,4 @@ export const INITIAL_MOCK_DATA = {
   "columnOrder": ["column-1", "column-2", "column-3", "column-4"]
 }
 
-export default INITIAL_DATA;
+export default INITIAL_STATE;
