@@ -1,4 +1,4 @@
-import { Box, Stack, Button } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { useState } from "react";
 import INITIAL_MOCK_DATA from "./db/mockData";
 import { KanbanData } from "../types/Kanban.interface";
